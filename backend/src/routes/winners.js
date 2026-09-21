@@ -1,0 +1,2 @@
+'use strict';
+const express=require('express');const multer=require('multer');const c=require('../controllers/winnerController');const {requireAuth}=require('../middleware/auth');const upload=multer({storage:multer.memoryStorage(),limits:{fileSize:5*1024*1024}});const r=express.Router();r.use(requireAuth);r.get('/',c.listMine);r.post('/:id/proof',upload.single('proof'),c.uploadProof);r.get('/:id/proof',c.getProof);module.exports=r;

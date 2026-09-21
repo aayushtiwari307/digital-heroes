@@ -1,0 +1,32 @@
+{
+  "name": "digital-heroes-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "test": "jest --runInBand",
+    "test:domain": "jest --runInBand src/domain",
+    "test:integration": "jest --runInBand tests/integration",
+    "migrate": "node src/config/migrate.js",
+    "audit:static": "node scripts/cto_static_audit.js",
+    "test:smoke": "node scripts/cto_domain_smoke.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.4.0",
+    "pg": "^8.12.0",
+    "stripe": "^16.8.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  },
+  "jest": {
+    "testTimeout": 30000
+  }
+}

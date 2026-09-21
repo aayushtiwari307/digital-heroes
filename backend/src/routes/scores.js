@@ -1,0 +1,12 @@
+'use strict';
+const express=require('express');
+const controller=require('../controllers/scoreController');
+const {requireAuth}=require('../middleware/auth');
+const {requireEntitledSubscription}=require('../middleware/entitlement');
+const router=express.Router();
+router.use(requireAuth);
+router.get('/',controller.list);
+router.post('/',requireEntitledSubscription,controller.create);
+router.put('/:id',requireEntitledSubscription,controller.update);
+router.delete('/:id',requireEntitledSubscription,controller.remove);
+module.exports=router;

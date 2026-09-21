@@ -1,0 +1,12 @@
+'use strict';
+const express=require('express');
+const controller=require('../controllers/authController');
+const {requireAuth}=require('../middleware/auth');
+const {rateLimit}=require('../middleware/rateLimit');
+const router=express.Router();
+router.post('/signup', rateLimit({name:'signup', max:30}), controller.signup);
+router.post('/login', rateLimit({name:'login', max:30}), controller.login);
+router.post('/refresh', rateLimit({name:'refresh', max:60}), controller.refresh);
+router.post('/logout', requireAuth, controller.logout);
+router.get('/me', requireAuth, controller.me);
+module.exports=router;

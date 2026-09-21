@@ -1,0 +1,1 @@
+'use strict';const express=require('express');const c=require('../controllers/adminWinnerController');const {requireAuth,requireRole}=require('../middleware/auth');const r=express.Router();r.use(requireAuth,requireRole('admin'));r.get('/',c.listAll);r.put('/:id/proof',c.review);r.put('/:id/payout',c.markPaid);module.exports=r;

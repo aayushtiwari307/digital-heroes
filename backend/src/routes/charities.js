@@ -1,0 +1,2 @@
+'use strict';
+const express=require('express');const c=require('../controllers/charityController');const a=require('../controllers/adminCharityController');const {requireAuth,requireRole}=require('../middleware/auth');const router=express.Router();router.get('/',c.list);router.get('/:id',c.get);router.post('/',requireAuth,requireRole('admin'),c.create);router.put('/:id',requireAuth,requireRole('admin'),c.update);router.delete('/:id',requireAuth,requireRole('admin'),c.remove);module.exports=router;
