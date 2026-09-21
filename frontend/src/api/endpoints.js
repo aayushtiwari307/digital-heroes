@@ -1,0 +1,68 @@
+import { api } from './client';
+
+export const endpoints = {
+  auth: {
+    signup: (payload) => api.post('/auth/signup', payload),
+    login: (payload) => api.post('/auth/login', payload),
+    me: () => api.get('/auth/me'),
+    logout: (refreshToken) => api.post('/auth/logout', { refreshToken }),
+  },
+  charities: {
+    list: (search = '') => api.get('/charities', { params: search ? { search } : {} }),
+    get: (id) => api.get(`/charities/${id}`),
+    create: (payload) => api.post('/charities', payload),
+    update: (id, payload) => api.put(`/charities/${id}`, payload),
+    deactivate: (id) => api.delete(`/charities/${id}`),
+    adminGet: (id) => api.get(`/admin/charities/${id}`),
+    events: (id) => api.get(`/admin/charities/${id}/events`),
+    createEvent: (id, payload) => api.post(`/admin/charities/${id}/events`, payload),
+    updateEvent: (id, eventId, payload) => api.put(`/admin/charities/${id}/events/${eventId}`, payload),
+    deleteEvent: (id, eventId) => api.delete(`/admin/charities/${id}/events/${eventId}`),
+    media: (id) => api.get(`/admin/charities/${id}/media`),
+    createMedia: (id, payload) => api.post(`/admin/charities/${id}/media`, payload),
+    deleteMedia: (id, mediaId) => api.delete(`/admin/charities/${id}/media/${mediaId}`),
+  },
+  plans: {
+    list: () => api.get('/subscriptions/plans'),
+  },
+  subscription: {
+    checkout: (payload) => api.post('/subscriptions/checkout', payload),
+    mine: () => api.get('/subscriptions/me'),
+    cancel: () => api.post('/subscriptions/cancel'),
+  },
+  scores: {
+    list: () => api.get('/scores'),
+    create: (payload) => api.post('/scores', payload),
+    update: (id, payload) => api.put(`/scores/${id}`, payload),
+    remove: (id) => api.delete(`/scores/${id}`),
+  },
+  draws: {
+    list: () => api.get('/draws'),
+    get: (id) => api.get(`/draws/${id}`),
+    simulate: (payload) => api.post('/admin/draws/simulate', payload),
+    publish: (id) => api.post(`/admin/draws/${id}/publish`),
+    adminGet: (id) => api.get(`/admin/draws/${id}`),
+  },
+  winners: {
+    mine: () => api.get('/winners'),
+    uploadProof: (id, formData) => api.post(`/winners/${id}/proof`, formData),
+    proof: (id) => api.get(`/winners/${id}/proof`),
+    adminList: (status) => api.get('/admin/winners', { params: status ? { status } : {} }),
+    review: (id, decision) => api.put(`/admin/winners/${id}/proof`, { decision }),
+    paid: (id) => api.put(`/admin/winners/${id}/payout`),
+  },
+  admin: {
+    users: () => api.get('/admin/users'),
+    user: (id) => api.get(`/admin/users/${id}`),
+    updateUser: (id, payload) => api.put(`/admin/users/${id}`, payload),
+    setRole: (id, role) => api.put(`/admin/users/${id}/role`, { role }),
+    userScores: (id) => api.get(`/admin/users/${id}/scores`),
+    updateUserScore: (userId, scoreId, payload) => api.put(`/admin/users/${userId}/scores/${scoreId}`, payload),
+    deleteUserScore: (userId, scoreId) => api.delete(`/admin/users/${userId}/scores/${scoreId}`),
+    subscriptions: () => api.get('/admin/subscriptions'),
+    cancelSubscription: (id) => api.put(`/admin/users/${id}/cancel-subscription`),
+    reports: () => api.get('/admin/reports'),
+    config: () => api.get('/admin/config'),
+    updatePool: (poolContributionPct) => api.put('/admin/config/pool-contribution', { poolContributionPct }),
+  },
+};
